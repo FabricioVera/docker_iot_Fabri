@@ -19,4 +19,7 @@ async def main():
             logging.info(str(message.topic) + ": " + message.payload.decode("utf-8"))
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    try:
+        asyncio.run(main())
+    except:
+        print("Saliendo...")

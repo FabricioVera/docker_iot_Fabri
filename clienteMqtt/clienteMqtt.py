@@ -3,6 +3,14 @@ import aiomqtt
 
 logging.basicConfig(format='%(asctime)s - cliente mqtt - %(levelname)s:%(message)s', level=logging.INFO, datefmt='%d/%m/%Y %H:%M:%S %z')
 
+
+async def publicar_contador(client):
+    while True:
+        await asyncio.sleep(5)
+        await client.publish(os.environ['TOPICOCONTADOR'], payload=0.38)
+
+
+
 async def main():
     tls_context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
     tls_context.verify_mode = ssl.CERT_REQUIRED
@@ -14,8 +22,10 @@ async def main():
         port=8883,
         tls_context=tls_context,
     ) as client:
+        #SUBSCRIPCIONES A TOPICOS A y B:
         await client.subscribe(os.environ['TOPICOA'])
         await client.subscribe(os.environ['TOPICOB'])
+        await publicar_contador(client)
         async for message in client.messages:
             if message.topic.matches(os.environ['TOPICOA']):
                 logging.info(str(message.topic) + ": " + message.payload.decode("utf-8"))

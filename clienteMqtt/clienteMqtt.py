@@ -14,12 +14,17 @@ async def main():
         port=8883,
         tls_context=tls_context,
     ) as client:
-        await client.subscribe(os.environ['TOPICO'])
+        await client.subscribe(os.environ['TOPICOA'])
+        await client.subscribe(os.environ['TOPICOB'])
         async for message in client.messages:
-            logging.info(str(message.topic) + ": " + message.payload.decode("utf-8"))
+            if message.topic.matches(os.environ['TOPICOA']):
+                logging.info(str(message.topic) + ": " + message.payload.decode("utf-8"))
+            if message.topic.matches(os.environ['TOPICOB']):
+                logging.info(str(message.topic) + ": " + message.payload.decode("utf-8"))
+            
 
 if __name__ == "__main__":
     try:
         asyncio.run(main())
-    except:
-        print("Saliendo...")
+    except KeyboardInterrupt:
+        logging.info("Saliendo del docker...")

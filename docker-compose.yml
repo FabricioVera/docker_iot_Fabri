@@ -5,5 +5,7 @@ services:
     environment:
       - TZ=America/Argentina/Buenos_Aires 
       - SERVIDOR=${SERVIDOR} #Se reemplazará por la env var SERVIDOR defineda en .env
-      - TOPICO=${TOPICO}
+      - TOPICOA=${TOPICOA}
+      - TOPICOB=${TOPICOB}
+      - TOPICOCONTADOR=${TOPICOCONTADOR}
     restart: unless-stopped

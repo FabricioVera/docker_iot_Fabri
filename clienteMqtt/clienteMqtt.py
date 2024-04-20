@@ -1,25 +1,28 @@
 import asyncio, ssl, certifi, logging, os, sys
 import aiomqtt
 
-logging.basicConfig(format='%(funcname)s - %(asctime)s - cliente mqtt - %(levelname)s:%(message)s', level=logging.INFO, datefmt='%d/%m/%Y %H:%M:%S %z')
+logging.basicConfig(format='%(funcName)s - %(asctime)s - cliente mqtt - %(levelname)s:%(message)s', level=logging.INFO, datefmt='%d/%m/%Y %H:%M:%S %z')
 
 class CONTADOR:
     def __init__(self):
-        self.contador = 0
+        self.__contador = 0
     def incrementar(self):
-        self.contador += 1
-
+        self.__contador += 1
+    def valor(self):
+        return self.__contador
 
 async def contar():
     while True:
         await asyncio.sleep(3)
-        await CONTADOR.incrementar()
+        contador.incrementar()
+        logging.info("Incremento de contador a: "+ str(contador.valor()))
 
 
 async def publicar_contador(client):
     while True:
         await asyncio.sleep(5)
-        await client.publish(os.environ['TOPICOCONTADOR'], payload=CONTADOR.contador)
+        await client.publish(os.environ['TOPICOCONTADOR'], payload=contador.valor())
+        logging.info("Publicando valor de contador.")
 
 async def lectura_topicoa():
     while True:
@@ -39,9 +42,9 @@ topicob_queue = asyncio.Queue()
 async def distributor(client):
     # Ordenar los mensajes recibidos en sus respectivas colas
     async for message in client.messages:
-        if message.topic.matches("TOPICOA"):
+        if message.topic.matches(os.environ['TOPICOA']):
             topicoa_queue.put_nowait(message)
-        elif message.topic.matches("TOPICOA"):
+        elif message.topic.matches(os.environ['TOPICOB']):
             topicob_queue.put_nowait(message)
 
 
@@ -80,6 +83,7 @@ async def main():
 
 if __name__ == "__main__":
     try:
+        contador = CONTADOR()
         asyncio.run(main())
     except KeyboardInterrupt:
         logging.info("Saliendo del docker...")

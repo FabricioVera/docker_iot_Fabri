@@ -1,7 +1,7 @@
 import asyncio, ssl, certifi, logging, os, sys
 import aiomqtt
 
-logging.basicConfig(format='%(taskName)s - %(asctime)s - cliente mqtt - %(levelname)s:%(message)s', level=logging.INFO, datefmt='%d/%m/%Y %H:%M:%S %z')
+logging.basicConfig(format='%(taskName)s - %(asctime)s - cliente mqtt - %(levelname)s:%(message)s', level=logging.INFO, datefmt='%d/%m/%Y %H:%M:%S')
 
 class CONTADOR:
     def __init__(self):
@@ -13,16 +13,17 @@ class CONTADOR:
 
 async def contar():
     while True:
-        await asyncio.sleep(3)
         contador.incrementar()
         logging.info("Incremento de contador a: "+ str(contador.valor()))
+        await asyncio.sleep(3)
 
 
 async def publicar_contador(client):
     while True:
-        await asyncio.sleep(5)
         await client.publish(os.environ['TOPICOCONTADOR'], payload=contador.valor())
-        logging.info("Publicando valor de contador.")
+        #logging.info("Publicando valor de contador.")
+        logging.info(os.environ['TOPICOCONTADOR']+': '+str(contador.valor()))
+        await asyncio.sleep(5)
 
 async def lectura_topicoa():
     while True:
@@ -66,11 +67,12 @@ async def main():
         await client.subscribe(os.environ['TOPICOB'])
         #await publicar_contador(client)
         async with asyncio.TaskGroup() as tg:
-            tg.create_task(publicar_contador(client), name='Publicar contador')
             tg.create_task(distributor(client), name='Administrador de mensajes')
             tg.create_task(lectura_topicoa(), name='Lectura del topico A')
             tg.create_task(lectura_topicob(), name='Lectura del topico B')
+            tg.create_task(publicar_contador(client), name='Publicar contador')
             tg.create_task(contar(), name='Incremento del contador')
+
         
             
 

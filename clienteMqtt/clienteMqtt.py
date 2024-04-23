@@ -21,8 +21,7 @@ async def contar():
 async def publicar_contador(client):
     while True:
         await client.publish(os.environ['TOPICOCONTADOR'], payload=contador.valor())
-        #logging.info("Publicando valor de contador.")
-        logging.info(os.environ['TOPICOCONTADOR']+': '+str(contador.valor()))
+        logging.info("Publicando valor de contador en:" + str(os.environ['TOPICOCONTADOR']))
         await asyncio.sleep(5)
 
 async def lectura_topicoa():

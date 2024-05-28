@@ -10,4 +10,4 @@ RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
 
 COPY . /app
 
-CMD ["python", "/app/telegrambot.py"]
+CMD ["python", "/app/telegrambot_cliente.py"]

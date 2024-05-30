@@ -115,7 +115,7 @@ def main():
     application.add_handler(CommandHandler('kill', kill))
     application.add_handler(MessageHandler(filters.Regex("^(temperatura|humedad)$"), medicion))
     application.add_handler(MessageHandler(filters.Regex("^(gráfico temperatura|gráfico humedad)$"), graficos))
-    application.add_handler(MessageHandler(filters.Regex("^(modo auto|modo manual|setpoint [0-9]+|rele [0-9]|periodo [0-9]+)$"), publicar))
+    application.add_handler(MessageHandler(filters.Regex("^(modo auto|modo manual|setpoint [0-9]+|rele [0-9]|periodo [0-9]+|destello destello)$"), publicar))
     
     application.run_polling()
 

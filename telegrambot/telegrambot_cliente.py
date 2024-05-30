@@ -23,6 +23,7 @@ logging.basicConfig(format='%(asctime)s - cliente mqtt - %(levelname)s:%(message
 async def publicar(update: Update, context: ContextTypes.DEFAULT_TYPE):
     dispositivo = os.environ["ESP_ID"]
     contexto = update.message.text.split(' ')[-2]
+    mensaje = update.message.text.split(' ')[-1]
     logging.info(f"{dispositivo}/{contexto}")
     async with aiomqtt.Client(
         os.environ["SERVIDOR"],
@@ -31,7 +32,8 @@ async def publicar(update: Update, context: ContextTypes.DEFAULT_TYPE):
         port=int(os.environ["PUERTO_MQTTS"]),
         tls_context=tls_context,
     ) as client:
-        await client.publish(f"{dispositivo}/{contexto}", update.message.text.split(' ')[-1], qos = 1)
+        await client.publish(f"{dispositivo}/{contexto}", mensaje, qos = 1)
+    logging.info("se publicó en el topico: " + f"{dispositivo}/{contexto}"+ " el mensaje: "+mensaje)
 
 
 

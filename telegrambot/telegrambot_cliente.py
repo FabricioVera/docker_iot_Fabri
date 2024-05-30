@@ -49,7 +49,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         apellido=update.message.from_user.last_name
     else:
         apellido=""
-    kb = [["temperatura"],["humedad"],["gráfico temperatura"],["gráfico humedad"], ["Modo Auto, Modo Manual"], ["Rele"]]
+    kb = [["temperatura","humedad"],["gráfico temperatura","gráfico humedad"], ["modo 0", "modo 1"], ["rele on", "rele off"],["destello on"]]
     await context.bot.send_message(update.message.chat.id, text="Bienvenido al Bot "+ nombre + " " + apellido,reply_markup=ReplyKeyboardMarkup(kb))
 
 async def acercade(update: Update, context):
@@ -117,7 +117,7 @@ def main():
     application.add_handler(CommandHandler('kill', kill))
     application.add_handler(MessageHandler(filters.Regex("^(temperatura|humedad)$"), medicion))
     application.add_handler(MessageHandler(filters.Regex("^(gráfico temperatura|gráfico humedad)$"), graficos))
-    application.add_handler(MessageHandler(filters.Regex("^(modo auto|modo manual|setpoint [0-9]+|rele [0-9]|periodo [0-9]+|destello destello)$"), publicar))
+    application.add_handler(MessageHandler(filters.Regex("^(modo 1|modo 0|rele off|rele on|setpoint [0-9]+|rele [0-9]|periodo [0-9]+|destello on)$"), publicar))
     
     application.run_polling()
 

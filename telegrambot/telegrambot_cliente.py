@@ -34,6 +34,7 @@ async def publicar(update: Update, context: ContextTypes.DEFAULT_TYPE):
     ) as client:
         await client.publish(f"{dispositivo}/{contexto}", mensaje, qos = 1)
     logging.info("se publicó en el topico: " + f"{dispositivo}/{contexto}"+ " el mensaje: "+mensaje)
+    await context.bot.send_message(update.message.chat.id, text="se publicó en el topico: " + f"{dispositivo}/{contexto}"+ " el mensaje: "+mensaje)
 
 
 

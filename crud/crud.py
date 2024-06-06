@@ -145,3 +145,4 @@ def logout():
     session.clear()
     logging.info("el usuario {} cerró su sesión".format(session.get("user_id")))
     return redirect(url_for('index'))
+

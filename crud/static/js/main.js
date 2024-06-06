@@ -10,3 +10,12 @@ if(btnDelete) {
     });
   })
 }
+
+let imagen = document.querySelectorAll("dropdown-item");
+imagen.onclick=function(){
+  if(document.getElementById('estilos').href==='https://bootswatch.com/5/cosmo/bootstrap.min.css'){
+  document.getElementById('estilos').href='https://bootswatch.com/5/darkly/bootstrap.min.css';
+  }else{
+    document.getElementById('estilos').href='https://bootswatch.com/5/cosmo/bootstrap.min.css';
+  }
+}

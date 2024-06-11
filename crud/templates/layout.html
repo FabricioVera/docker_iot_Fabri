@@ -18,6 +18,14 @@
     <div class="container-fluid">
       <a class="navbar-brand" href="#">CRUD</a>
       {% if session.get("user_id") %}
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{{url_for('index')}}">Add contacts</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{url_for('esp32')}}">ESP32</a>
+        </li>
+      </ul>
       <div class="d-flex">
         <div class="nav-item pe-3 pt-2">{{ session.get("user_id") }}</div>
         <a href="{{url_for('logout')}}" class="btn btn-secondary my-2 my-sm-0" type="submit">Salir</a>

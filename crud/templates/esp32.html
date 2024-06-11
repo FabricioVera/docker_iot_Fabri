@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="row">
+  <div class="col-md-7 mx-auto">
+    <div class="card card-body">
+      <form action="{{url_for('esp32')}}" method="POST">
+        <legend>Comandar ESP32</legend>
+        <div class="form-group">
+
+          <div>
+            <label for="dispositivo" class="form-label mt-4">dispositivo</label>
+            <select class="form-select" id="dispositivo" name="dispositivo">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+          </div>
+
+        </div>
+        <div>
+          <label for="topico" class="form-label mt-4">topico</label>
+          <select class="form-select" id="topico" name="topico">
+            <option>destello</option>
+            <option>setpoint</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="col-form-label mt-4" for="mensaje">mensaje</label>
+          <input class="form-control" id="mensaje" name="mensaje">
+        </div>
+        
+        <button type="submit" class="btn btn-primary mt-4">enviar</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

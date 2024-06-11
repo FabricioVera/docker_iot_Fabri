@@ -146,3 +146,38 @@ def logout():
     logging.info("el usuario {} cerró su sesión".format(session.get("user_id")))
     return redirect(url_for('index'))
 
+# EJERCICIO 2
+
+import asyncio, ssl, certifi, logging, os, aiomysql, json, traceback
+import aiomqtt
+
+tls_context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+tls_context.verify_mode = ssl.CERT_REQUIRED
+tls_context.check_hostname = True
+tls_context.load_default_certs()
+
+
+async def publicar(dispositivo, contexto, mensaje):
+    async with aiomqtt.Client(
+        os.environ["SERVIDOR"],
+        username=os.environ["MQTT_USR"],
+        password=os.environ["MQTT_PASS"],
+        port=int(os.environ["PUERTO_MQTTS"]),
+        tls_context=tls_context,
+    ) as client:
+        await client.publish(f"{dispositivo}/{contexto}", mensaje, qos = 1)
+    logging.info("se publicó en el topico: " + f"{dispositivo}/{contexto}"+ " el mensaje: "+mensaje)
+
+
+
+@app.route('/esp32', methods=['GET', 'POST'])
+@require_login
+def esp32():
+    if request.method == 'POST':
+        dispositivo = request.form['dispositivo']
+        topico = request.form['topico']
+        mensaje = request.form['mensaje']
+        asyncio.run(publicar(dispositivo, topico, mensaje))
+        return redirect(url_for('esp32'))
+    if request.method == 'GET':
+        return render_template('esp32.html')

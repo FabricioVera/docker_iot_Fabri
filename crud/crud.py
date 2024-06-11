@@ -181,4 +181,8 @@ def esp32():
         asyncio.run(publicar(dispositivo, topico, mensaje))
         return redirect(url_for('esp32'))
     if request.method == 'GET':
-        return render_template('esp32.html')
+        cur = mysql.connection.cursor()
+        cur.execute('SELECT * FROM mediciones')
+        datos = cur.fetchall()
+        cur.close()
+        return render_template('esp32.html', dispositivo = datos)

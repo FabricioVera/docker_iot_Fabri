@@ -10,11 +10,9 @@
           <div>
             <label for="dispositivo" class="form-label mt-4">dispositivo</label>
             <select class="form-select" id="dispositivo" name="dispositivo">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
+              {% for dispositivo in dispositivos %}
+              <option>{{dispositivo.1}}</option>
+              {% endfor %}
             </select>
           </div>
 

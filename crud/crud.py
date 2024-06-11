@@ -166,7 +166,8 @@ async def publicar(dispositivo, contexto, mensaje):
         tls_context=tls_context,
     ) as client:
         await client.publish(f"{dispositivo}/{contexto}", mensaje, qos = 1)
-    logging.info("se publicó en el topico: " + f"{dispositivo}/{contexto}"+ " el mensaje: "+mensaje)
+    logging.info("Se publicó en el topico: '" + f"{dispositivo}/{contexto}"+ "' el mensaje: "+mensaje)
+    flash("Se publicó en el topico: '" + f"{dispositivo}/{contexto}"+ "' el mensaje: "+mensaje)
 
 
 

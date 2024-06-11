@@ -182,7 +182,7 @@ def esp32():
         return redirect(url_for('esp32'))
     if request.method == 'GET':
         cur = mysql.connection.cursor()
-        cur.execute('SELECT * FROM mediciones')
+        cur.execute('SELECT DISTINCT sensor_id FROM sensores_remotos.mediciones')
         datos = cur.fetchall()
         cur.close()
-        return render_template('esp32.html', dispositivo = datos)
+        return render_template('esp32.html', dispositivos = datos)

@@ -44,7 +44,8 @@ function changetheme(themestate){
     setCookie("theme", themestate, 1);
   }
   else{
-    document.getElementById('estilos').setAttribute("href",`https://bootswatch.com/5/darkly/bootstrap.min.css`);
+    //el tema por defecto es el claro
+    document.getElementById('estilos').setAttribute("href",`https://bootswatch.com/5/cosmo/bootstrap.min.css`);
   }
 }
   

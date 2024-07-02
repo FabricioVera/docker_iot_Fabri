@@ -156,6 +156,9 @@ services:
       - INFLUX_TOKEN=${INFLUX_TOKEN}
       - TELEGRAM_CHATID=${TELEGRAM_CHATID}
       - TB_TOKEN=${TB_TOKEN}
+      - TOPICO_ESP_ESTADO=${TOPICO_ESP_ESTADO}
+      - TOPICO_ESP_ORDEN=${TOPICO_ESP_ORDEN}
+      - ESP_ID = ${ESP_ID}
     volumes:
       - ./node-red:/data
     restart: unless-stopped
@@ -175,9 +178,9 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=America/Argentina/Buenos_Aires
-      - SERVERURL=${DOMINIO}
+      - SERVERURL=${SERVIDOR}
       - SERVERPORT=${PUERTO}
-      - PEERS=peer1,peer2   #cambiar
+      - PEERS=fabri,peer2   #cambiar
       - PEERDNS=auto
       - INTERNAL_SUBNET=10.13.13.0 #optional
       - ALLOWEDIPS=0.0.0.0/0

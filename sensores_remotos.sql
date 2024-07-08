@@ -1,8 +1,8 @@
 --
--- Base de datos: `sensores_remotos`
+-- Base de datos: `generadores`
 --
-CREATE DATABASE IF NOT EXISTS `sensores_remotos` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `sensores_remotos`;
+CREATE DATABASE IF NOT EXISTS `generadores` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `generadores`;
 
 -- --------------------------------------------------------
 
@@ -12,10 +12,10 @@ USE `sensores_remotos`;
 
 CREATE TABLE `mediciones` (
   `id` int(11) NOT NULL,
-  `sensor_id` char(12) NOT NULL,
+  `generador_id` char(12) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `temperatura` decimal(3,1) NOT NULL,
-  `humedad` decimal(3,1) NOT NULL   
+  `combustible` decimal(3,1) NOT NULL,
+  `prioridad` decimal(3,1) NOT NULL   
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
